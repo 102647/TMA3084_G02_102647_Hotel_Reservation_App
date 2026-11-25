@@ -1,30 +1,54 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:hotel_reservation_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  setUp(() {
+    // Use a larger screen for booking form tests.
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Booking screen displays correctly',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1400, 1200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(const HotelReservationApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Green Haven Hotel'), findsOneWidget);
+    expect(find.text('Book Your Stay'), findsOneWidget);
+    expect(
+      find.text('Relax, unwind and enjoy your stay with us.'),
+      findsOneWidget,
+    );
+    expect(find.text('Guest Information'), findsOneWidget);
+    expect(find.text('Check-in Date'), findsOneWidget);
+    expect(find.text('Number of Guests'), findsOneWidget);
+    expect(find.text('Room Preference'), findsOneWidget);
+    expect(find.text('Reserve'), findsOneWidget);
+  });
+
+  testWidgets('Empty booking form displays four validation errors',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1400, 1200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const HotelReservationApp());
+
+    final reserveButton = find.byKey(const Key('reserveButton'));
+
+    expect(reserveButton, findsOneWidget);
+
+    await tester.ensureVisible(reserveButton);
+    await tester.tap(reserveButton);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Please enter your name'), findsOneWidget);
+    expect(find.text('Please enter your phone number'), findsOneWidget);
+    expect(find.text('Choose a check-in date'), findsOneWidget);
+    expect(find.text('Please accept the hotel policy'), findsOneWidget);
   });
 }
