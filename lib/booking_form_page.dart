@@ -169,16 +169,22 @@ class _BookingFormPageState extends State<BookingFormPage> {
               ),
               const SizedBox(height: 12),
 
-              OutlinedButton.icon(
-                key: const Key('checkInButton'),
-                onPressed: _selectDate,
-                icon: const Icon(Icons.calendar_month),
-                label: Text(
-                  _checkIn == null
-                      ? 'Choose check-in date'
-                      : '${_checkIn!.day}/${_checkIn!.month}/${_checkIn!.year}',
-                ),
-              ),
+              
+OutlinedButton.icon(
+  key: const Key('checkInButton'),
+  onPressed: _selectDate,
+  icon: const Icon(Icons.calendar_month),
+  label: AnimatedSwitcher(
+    duration: const Duration(milliseconds: 300),
+    child: Text(
+      _checkIn == null
+          ? 'Choose check-in date'
+          : '${_checkIn!.day}/${_checkIn!.month}/${_checkIn!.year}',
+      key: ValueKey(_checkIn),
+    ),
+  ),
+),
+
 
               if (_dateError != null)
                 Padding(
@@ -305,8 +311,11 @@ class _BookingFormPageState extends State<BookingFormPage> {
               const SizedBox(height: 20),
 
               AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                child: ElevatedButton(
+  duration: const Duration(milliseconds: 300),
+  padding: EdgeInsets.symmetric(
+    vertical: _accepted ? 5 : 0,
+  ),
+  child: ElevatedButton(
                   key: const Key('reserveButton'),
                   onPressed: _submitBooking,
                   style: ElevatedButton.styleFrom(
