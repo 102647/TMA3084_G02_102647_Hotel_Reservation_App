@@ -12,6 +12,24 @@ String? validateName(String? value) {
   return null;
 }
 
+String? validateEmail(String? value) {
+  final email = value?.trim() ?? '';
+
+  if (email.isEmpty) {
+    return 'Please enter your email';
+  }
+
+  final emailPattern = RegExp(
+    r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
+  );
+
+  if (!emailPattern.hasMatch(email)) {
+    return 'Enter a valid email address';
+  }
+
+  return null;
+}
+
 String? validatePhone(String? value) {
   final phone = value?.trim() ?? '';
 

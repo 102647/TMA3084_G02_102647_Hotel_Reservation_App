@@ -11,7 +11,9 @@ class BookingFormPage extends StatefulWidget {
 
 class _BookingFormPageState extends State<BookingFormPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
   DateTime? _checkIn;
@@ -29,6 +31,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
   @override
   void dispose() {
     _nameController.dispose();
+    _emailController.dispose();
     _phoneController.dispose();
     super.dispose();
   }
@@ -128,6 +131,18 @@ class _BookingFormPageState extends State<BookingFormPage> {
                   prefixIcon: Icon(Icons.person_outline),
                 ),
                 validator: validateName,
+              ),
+              const SizedBox(height: 16),
+
+              TextFormField(
+                key: const Key('emailField'),
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'Email address',
+                  prefixIcon: Icon(Icons.email_outlined),
+                ),
+                validator: validateEmail,
               ),
               const SizedBox(height: 16),
 

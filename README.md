@@ -10,7 +10,9 @@ Green Haven Hotel is a simple hotel reservation application that allows guests t
 
 ## Features
 
-- Guest name and phone number validation.
+- Guest name validation.
+- Email address validation.
+- Phone number validation.
 - Check-in date selection.
 - Guest quantity selection.
 - Room preference selection.
@@ -41,37 +43,4 @@ The project includes:
 - Acceptance criteria tests for REQ-12.
 - Room list widget tests.
 
-Run the tests:
-
-```bash
-flutter test
-```
-
-Run static analysis:
-
-```bash
-flutter analyze
-```
-
-Generate test coverage:
-
-```bash
-flutter test --coverage
-```
-
-## Test Coverage
-
-Current local test coverage: **92.99%**
-
-Minimum required coverage: **60%**
-
-## Repository
-
-[Green Haven Hotel — GitHub Repository](https://github.com/102647/TMA3084_G02_102647_Hotel_Reservation_App)
-
-## Course Information
-
-- Course: TMA3084 Software Engineering Laboratory
-- Lab: Lab 06 Lesson 08
-- Group: G02
-- Application: Hotel Reservation App
+Run the tests

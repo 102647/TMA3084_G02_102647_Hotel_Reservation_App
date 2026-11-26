@@ -4,7 +4,7 @@ import 'package:hotel_reservation_app/main.dart';
 
 void main() {
   Future<void> openBookingForm(WidgetTester tester) async {
-    tester.view.physicalSize = const Size(1400, 1400);
+    tester.view.physicalSize = const Size(1400, 1600);
     tester.view.devicePixelRatio = 1;
 
     addTearDown(tester.view.resetPhysicalSize);
@@ -13,7 +13,7 @@ void main() {
     await tester.pumpWidget(const HotelReservationApp());
   }
 
-  testWidgets('AC1 - Empty form displays four validation errors',
+  testWidgets('AC1 - Empty form displays validation errors',
       (WidgetTester tester) async {
     await openBookingForm(tester);
 
@@ -22,6 +22,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Please enter your name'), findsOneWidget);
+    expect(find.text('Please enter your email'), findsOneWidget);
     expect(find.text('Please enter your phone number'), findsOneWidget);
     expect(find.text('Choose a check-in date'), findsOneWidget);
     expect(find.text('Please accept the hotel policy'), findsOneWidget);
@@ -30,6 +31,16 @@ void main() {
   testWidgets('AC2 - Invalid phone number displays an error',
       (WidgetTester tester) async {
     await openBookingForm(tester);
+
+    await tester.enterText(
+      find.byKey(const Key('guestNameField')),
+      'Alex Tan',
+    );
+
+    await tester.enterText(
+      find.byKey(const Key('emailField')),
+      'alex@example.com',
+    );
 
     await tester.enterText(
       find.byKey(const Key('phoneField')),
@@ -55,6 +66,16 @@ void main() {
       'Al',
     );
 
+    await tester.enterText(
+      find.byKey(const Key('emailField')),
+      'alex@example.com',
+    );
+
+    await tester.enterText(
+      find.byKey(const Key('phoneField')),
+      '0123456789',
+    );
+
     await tester.ensureVisible(find.byKey(const Key('reserveButton')));
     await tester.tap(find.byKey(const Key('reserveButton')));
     await tester.pumpAndSettle();
@@ -72,6 +93,11 @@ void main() {
     await tester.enterText(
       find.byKey(const Key('guestNameField')),
       'Alex Tan',
+    );
+
+    await tester.enterText(
+      find.byKey(const Key('emailField')),
+      'alex@example.com',
     );
 
     await tester.enterText(

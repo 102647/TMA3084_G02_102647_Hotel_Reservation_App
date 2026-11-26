@@ -4,10 +4,7 @@ import 'package:hotel_reservation_app/validators.dart';
 void main() {
   group('validateName', () {
     test('returns error when name is empty', () {
-      expect(
-        validateName(''),
-        'Please enter your name',
-      );
+      expect(validateName(''), 'Please enter your name');
     });
 
     test('returns error when name has fewer than 3 characters', () {
@@ -19,6 +16,23 @@ void main() {
 
     test('returns null when name is valid', () {
       expect(validateName('Alex'), null);
+    });
+  });
+
+  group('validateEmail', () {
+    test('returns error when email is empty', () {
+      expect(validateEmail(''), 'Please enter your email');
+    });
+
+    test('returns error when email format is invalid', () {
+      expect(
+        validateEmail('alexexample.com'),
+        'Enter a valid email address',
+      );
+    });
+
+    test('returns null when email is valid', () {
+      expect(validateEmail('alex@example.com'), null);
     });
   });
 
@@ -55,10 +69,7 @@ void main() {
     });
 
     test('returns null when date is selected', () {
-      expect(
-        validateCheckIn(DateTime(2026, 12, 1)),
-        null,
-      );
+      expect(validateCheckIn(DateTime(2026, 12, 1)), null);
     });
   });
 
